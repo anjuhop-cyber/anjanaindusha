@@ -298,7 +298,7 @@ export default function Hero() {
               "
             >
               <Image
-                src="/images/hero2.jpeg"
+                src="/images/hero5.jpeg"
                 alt={`${wedding.bride} and ${wedding.groom} together`}
                 fill
                 priority
