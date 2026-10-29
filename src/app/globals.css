@@ -1,0 +1,413 @@
+/* Tailwind handles component styling. CSS below contains shared foundations
+   and animation keyframes only. Semantic class names in JSX are selector hooks. */
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap");
+
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --paper: #f4ede1;
+    --cream: #eee4d3;
+    --terracotta: #b96f52;
+    --rust: #8d4937;
+    --brown: #3d2b24;
+    --muted: #77665d;
+    --line: #c9b9a4;
+
+    --font-cormorant: "Cormorant Garamond";
+    --font-dm-sans: "DM Sans";
+  }
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 85px;
+  }
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--brown);
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+}
+
+@layer base {
+  body {
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+}
+
+@layer base {
+  button {
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+}
+
+@layer base {
+  input {
+    font-family: var(--font-dm-sans), sans-serif;
+  }
+}
+
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+@layer base {
+  button {
+    font: inherit;
+  }
+}
+
+@layer base {
+  input {
+    font: inherit;
+  }
+}
+
+@layer base {
+  button {
+    cursor: pointer;
+  }
+}
+
+@layer base {
+  img {
+    display: block;
+    max-width: 100%;
+  }
+}
+
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--terracotta);
+    outline-offset: 3px;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes event-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes event-flash {
+  0%,
+  78%,
+  100% {
+    opacity: 1;
+    filter: drop-shadow(0 0 0 transparent);
+  }
+
+  84% {
+    opacity: 0.65;
+    filter: drop-shadow(0 0 4px #e8a76e);
+  }
+
+  90% {
+    opacity: 1;
+  }
+}
+
+@keyframes event-clink {
+  0%,
+  75%,
+  100% {
+    transform: rotate(0);
+  }
+
+  80% {
+    transform: rotate(-8deg);
+  }
+
+  86% {
+    transform: rotate(7deg);
+  }
+
+  92% {
+    transform: rotate(-2deg);
+  }
+}
+
+@keyframes event-shimmer {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.78;
+    transform: scale(1.08);
+  }
+}
+
+@keyframes event-dance {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+
+  25% {
+    transform: translateY(-2px) rotate(-5deg);
+  }
+
+  75% {
+    transform: translateY(-2px) rotate(5deg);
+  }
+}
+
+@keyframes event-heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.12);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.08);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .details .event-card,
+  .details .calendar,
+  .details .event-icon {
+    transition: none;
+  }
+
+  .details .event-icon svg {
+    animation: none !important;
+    will-change: auto;
+  }
+
+  .details .event-card:hover,
+  .details .calendar:hover {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes leaf-fall {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate3d(40px, 30vh, 0) rotate(120deg);
+  }
+
+  50% {
+    transform: translate3d(-30px, 60vh, 0) rotate(240deg);
+  }
+
+  75% {
+    transform: translate3d(35px, 90vh, 0) rotate(330deg);
+  }
+
+  100% {
+    transform: translate3d(-10px, 115vh, 0) rotate(420deg);
+  }
+}
+
+/* Wedding timeline icon animations */
+@keyframes wedding-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes wedding-sway {
+  0%, 100% {
+    transform: rotate(-10deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes wedding-dance {
+  0%, 100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  25% {
+    transform: translateY(-4px) rotate(8deg);
+  }
+  50% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  75% {
+    transform: translateY(-3px) rotate(8deg);
+  }
+}
+
+@keyframes wedding-heartbeat {
+  0%, 40%, 100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  28% {
+    transform: scale(1);
+  }
+  32% {
+    transform: scale(1.1);
+  }
+}
+
+.wedding-timeline-icon svg {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.wedding-icon-float svg {
+  animation: wedding-float 3s ease-in-out infinite;
+}
+
+.wedding-icon-sway svg {
+  animation: wedding-sway 3s ease-in-out infinite;
+}
+
+.wedding-icon-dance svg {
+  animation: wedding-dance 2.4s ease-in-out infinite;
+}
+
+.wedding-icon-heartbeat svg {
+  animation: wedding-heartbeat 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-timeline-icon svg {
+    animation: none;
+  }
+}
+
+@keyframes wedding-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes wedding-sway {
+  0%, 100% {
+    transform: rotate(-16deg);
+  }
+  50% {
+    transform: rotate(16deg);
+  }
+}
+
+@keyframes wedding-dance {
+  0%, 100% {
+    transform: translateY(0) rotate(-12deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(12deg);
+  }
+  50% {
+    transform: translateY(0) rotate(-12deg);
+  }
+  75% {
+    transform: translateY(-5px) rotate(12deg);
+  }
+}
+
+@keyframes wedding-heartbeat {
+  0%, 40%, 100% {
+    transform: scale(1);
+  }
+  15%, 32% {
+    transform: scale(1.2);
+  }
+  25% {
+    transform: scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wedding-moving-icon {
+    animation: none !important;
+  }
+}
+
+html {
+  scroll-padding-top: 110px;
+}
+
+@media (max-width: 900px) {
+  html {
+    scroll-padding-top: 24px;
+  }
+
+  body {
+    padding-bottom: calc(96px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reserve space below the fixed desktop navbar. */
+@media (min-width: 901px) {
+  .wedding-hero {
+    padding-top: 120px;
+  }
+}
