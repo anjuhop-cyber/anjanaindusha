@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Check, Copy, ExternalLink, Link2 } from "lucide-react";
 
 const invitationUrl =
-  "https://anjanaindushawedding.space/homecoming";
+  "https://www.anjanaindushawedding.space/homecoming";
 
 type Invitation = {
   name: string;
