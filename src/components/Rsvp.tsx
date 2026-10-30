@@ -6,8 +6,44 @@ import Reveal from "@/components/ui/Reveal";
 import Orn from "@/components/ui/Orn";
 
 export default function Rsvp() {
+  const [name, setName] = useState("");
   const [guests, setGuests] = useState(1);
   const [attend, setAttend] = useState(true);
+
+  function sendRsvp() {
+    const guestName = name.trim();
+
+    if (!guestName) return;
+
+    const bride = {
+      name: "Indusha",
+      phone: "+94760639821",
+    };
+
+    const message = [
+      `Hi ${bride.name}! `,
+      "",
+      "RSVP for Indusha & Anjana’s Homecoming",
+      "",
+      `Name: ${guestName}`,
+      `Attendance: ${
+        attend ? "Joyfully accepts" : "Regretfully declines"
+      }`,
+      ...(attend
+        ? [`Number of guests (including me): ${guests}`]
+        : []),
+      "",
+      attend
+        ? "Looking forward to celebrating with you both!"
+        : "Wishing you both a beautiful celebration!",
+    ].join("\n");
+
+    const phone = bride.phone.replace(/\D/g, "");
+
+    window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(
+      message,
+    )}`;
+  }
 
   return (
     <section
@@ -32,36 +68,42 @@ export default function Rsvp() {
         <Orn />
 
         <p>
-          Your presence is the greatest gift. Please let us know if you will be
-          joining us in Colombo.
+          Your presence is the greatest gift. Please let us know if you
+          will be joining us for our homecoming.
         </p>
       </Reveal>
 
       <form
         onSubmit={(event) => {
           event.preventDefault();
-
-          alert(
-            `Thank you! Your RSVP has been received.\nAttendance: ${
-              attend ? "Accepts" : "Declines"
-            }\nGuests: ${guests}`,
-          );
+          sendRsvp();
         }}
       >
-        <input required placeholder="Your name" />
+        <input
+          required
+          name="name"
+          autoComplete="name"
+          aria-label="Your name"
+          placeholder="Your name"
+          pattern=".*\S.*"
+          title="Please enter your name."
+          value={name}
+          onChange={(event) => setName(event.target.value)}
+        />
 
         <div
           className="
-        choice flex gap-[10px] [@media(width<=800px)]:flex-col [&_button]:[flex:1] [&_button]:p-[15px]
-        [&_button]:[border:1px_solid_var(--line)] [&_button]:[background:transparent]
-        [&_button]:text-[var(--muted)] [&_button]:text-[11px] [&_button]:tracking-[0.12em]
-        [&_button]:uppercase [&_button.active]:[border-color:var(--rust)]
-        [&_button.active]:[background:var(--rust)] [&_button.active]:text-[white]
-      "
+            choice flex gap-[10px] [@media(width<=800px)]:flex-col [&_button]:[flex:1] [&_button]:p-[15px]
+            [&_button]:[border:1px_solid_var(--line)] [&_button]:[background:transparent]
+            [&_button]:text-[var(--muted)] [&_button]:text-[11px] [&_button]:tracking-[0.12em]
+            [&_button]:uppercase [&_button.active]:[border-color:var(--rust)]
+            [&_button.active]:[background:var(--rust)] [&_button.active]:text-[white]
+          "
         >
           <button
             type="button"
             className={attend ? "active" : ""}
+            aria-pressed={attend}
             onClick={() => setAttend(true)}
           >
             Joyfully accepts
@@ -70,51 +112,77 @@ export default function Rsvp() {
           <button
             type="button"
             className={!attend ? "active" : ""}
+            aria-pressed={!attend}
             onClick={() => setAttend(false)}
           >
             Regretfully declines
           </button>
         </div>
 
-        <label>Number of guests</label>
+        {attend && (
+          <div className="grid gap-[22px]">
+            <p
+              id="rsvp-guests-label"
+              className="m-0 text-[9px] uppercase tracking-[0.2em] text-[var(--muted)]"
+            >
+              Number of guests (including you)
+            </p>
 
-        <div
-          className="
-        counter flex items-center justify-center gap-[25px] [&_span]:min-w-[20px]
-        [&_span]:[font-family:var(--font-cormorant),_serif] [&_span]:text-[23px] [&_button]:grid
-        [&_button]:w-[34px] [&_button]:h-[34px] [&_button]:[place-items:center]
-        [&_button]:[border:1px_solid_var(--line)] [&_button]:rounded-[50%]
-        [&_button]:[background:transparent] [&_button]:text-[var(--brown)] [&_svg]:w-[13px] [&_svg]:h-[13px]
-      "
-        >
-          <button
-            type="button"
-            aria-label="Remove guest"
-            onClick={() => setGuests(Math.max(1, guests - 1))}
-          >
-            <Minus />
-          </button>
+            <div
+              role="group"
+              aria-labelledby="rsvp-guests-label"
+              className="
+                counter flex items-center justify-center gap-[25px] [&_span]:min-w-[20px]
+                [&_span]:[font-family:var(--font-cormorant),_serif] [&_span]:text-[23px] [&_button]:grid
+                [&_button]:w-[34px] [&_button]:h-[34px] [&_button]:[place-items:center]
+                [&_button]:[border:1px_solid_var(--line)] [&_button]:rounded-[50%]
+                [&_button]:[background:transparent] [&_button]:text-[var(--brown)] [&_svg]:w-[13px] [&_svg]:h-[13px]
+                [&_button:disabled]:cursor-not-allowed [&_button:disabled]:opacity-40
+              "
+            >
+              <button
+                type="button"
+                aria-label="Remove guest"
+                disabled={guests <= 1}
+                onClick={() =>
+                  setGuests((current) => Math.max(1, current - 1))
+                }
+              >
+                <Minus aria-hidden="true" />
+              </button>
 
-          <span>{guests}</span>
+              <span aria-live="polite" aria-atomic="true">
+                {guests}
+              </span>
 
-          <button
-            type="button"
-            aria-label="Add guest"
-            onClick={() => setGuests(Math.min(10, guests + 1))}
-          >
-            <Plus />
-          </button>
-        </div>
+              <button
+                type="button"
+                aria-label="Add guest"
+                disabled={guests >= 10}
+                onClick={() =>
+                  setGuests((current) => Math.min(10, current + 1))
+                }
+              >
+                <Plus aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        )}
 
         <button
           className="
-        submit p-[16px] [border:0] [background:var(--terracotta)] text-[white] text-[10px] tracking-[0.2em]
-        uppercase [transition:background-color_200ms_ease] [&:hover]:[background:var(--rust)]
-      "
+            submit p-[16px] [border:0] [background:var(--terracotta)] text-[white] text-[10px] tracking-[0.2em]
+            uppercase [transition:background-color_200ms_ease] [&:hover]:[background:var(--rust)]
+            cursor-pointer
+          "
           type="submit"
         >
-          Send our RSVP
+          Send RSVP via WhatsApp
         </button>
+
+        <p className="m-0 text-[11px] leading-relaxed text-[var(--muted)]">
+          WhatsApp will open with your response. Tap Send to confirm your RSVP.
+        </p>
       </form>
     </section>
   );
